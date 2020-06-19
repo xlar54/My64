@@ -13,6 +13,8 @@ Memory::Memory() {
 	for (int t = 0; t < 8192; t++)
 		kernal[t] = 0;
 
+	for (int t = 0; t < 4096; t++)
+		charset[t] = 0;
 	
 }
 
@@ -65,6 +67,30 @@ void Memory::Poke(UINT16_T address, UINT8_T value)
 		
 }
 
+void Memory::Text(UINT16_T pos, UINT8_T value)
+{
+	int x0 = (pos % 40) * 8;
+	int y0 = (pos / 40) * 8;
+	for (int x = 0; x < 7; x++)
+		for (int y = 0; y < 7; y++)
+			if (VicPeek(0x1000 + value * 8 + y) & (0x80 >> x))
+				vic2->SetPixel(x0 + x, y0 + y, 14); //light blue
+			else
+				vic2->SetPixel(x0 + x, y0 + y, 6); //blue
+}
+
+
+UINT8_T Memory::VicPeek(UINT16_T address)
+{
+	if (address >= 0x1000 && address <= 0x1fff)
+		return charset[address + 0xc000];
+
+	if (address >= 0x9000 && address <= 0x9fff)
+		return charset[address + 0x4000];
+
+	return ram[address];
+}
+
 void Memory::LoadBasic(UINT8_T* data)
 {
 	for (int t = 0; t < 8192; t++)
@@ -77,8 +103,8 @@ void Memory::LoadKernal(UINT8_T* data)
 		kernal[t] = data[t];
 }
 
-void Memory::LoadRAM(UINT8_T* data)
+void Memory::LoadCharset(UINT8_T* data)
 {
-	for (int t = 0; t < 8192; t++)
-		ram[t] = data[t];
+	for (int t = 0; t < 4096; t++)
+		charset[t] = data[t];
 }

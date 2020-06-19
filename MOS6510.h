@@ -1,6 +1,10 @@
 #pragma once
+#include <chrono>
 #include "Memory.h"
 #include "types.h"
+#include <conio.h> //not portable
+#include <iostream>
+#include "win32\Keyboard.h"
 
 class MOS6510
 {
@@ -14,6 +18,12 @@ private:
 	UINT8_T p = 0;
 	UINT8_T s = 0xff;
 	UINT16_T pc = 0;
+
+	std::chrono::milliseconds startTime;
+	std::chrono::milliseconds currentTime;
+	Keyboard keyboard;
+
+	long long  timer50hz = 20;
 
 	void inc(UINT8_T step) { pc += step; };
 	void dec(UINT8_T step) { pc -= step; };
@@ -41,6 +51,30 @@ private:
 	static const UINT8_T b = 0x10;
 	static const UINT8_T v = 0x40;
 	static const UINT8_T n = 0x80;
+
+	//**********************************************************************
+	// Addkey
+	//**********************************************************************
+	void addkey()
+	{
+		UINT8_T ch = keyboard.Getkey();
+
+		if (ch != 0)
+		{
+			UINT8_T buff = memory.Peek(0xc6);
+
+			if (buff < 10)
+			{
+				if (ch != 0)
+				{
+					memory.Poke(0x0277 + buff, ch);
+					memory.Poke(0xC6, buff + 1);
+				};
+			}
+		}
+
+
+	}
 
 	void setflag(UINT8_T flag, bool status)
 	{
@@ -236,12 +270,14 @@ private:
 
 	void brk(void)
 	{
+		setflag(b, true);
 		inc(1);
 		push(hi(pc));
 		push(lo(pc));
-		dec(1);
+		//dec(1);
 		push(p);
 		setflag(i, true);
+		pc = memory.PeekW(0xfffe);
 	};
 
 	void cmp(UINT16_T address)
@@ -440,6 +476,41 @@ private:
 		setflag(z, a == 0);
 		setflag(n, a >= 0x80);
 	};
+
+//****************************************************************************************************
+// Interrupts and reset
+//****************************************************************************************************
+	void irq(void)
+	{
+		if (!flagset(i)) {
+			setflag(b, false);
+			push(hi(pc));
+			push(lo(pc));
+			push(p);
+			setflag(i, true);
+			pc = memory.PeekW(0xfffe);
+			
+			addkey();
+
+			timer50hz += 20;
+		}
+	};
+
+	void nmi(void)
+	{
+		setflag(b, false);
+		push(hi(pc));
+		push(lo(pc));
+		push(p);
+		setflag(i, true);
+		pc = memory.PeekW(0xfffa);
+	}
+
+	void reset(void)
+	{
+		pc = memory.PeekW(0xfffc);
+		setflag(i, true);
+	}
 
 public:
 	MOS6510(void);

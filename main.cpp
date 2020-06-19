@@ -4,9 +4,7 @@
 #include "MOS6510.h"
 #include "MOS6569.h"
 
-
 void loadroms(void);
-void loadcputest(void);
 
 MOS6510 cpu;
 MOS6569 vic2;
@@ -14,10 +12,7 @@ MOS6569 vic2;
 int main(int argc, char* argv[])
 {
     loadroms();
-    //loadcputest();
-    //cpu.memory.basicIn = false;
-    //cpu.memory.ioIn = false;
-   // cpu.memory.kernalIn = false;
+
     cpu.memory.MapIO(&vic2);
 	cpu.run(cpu.memory.PeekW(0xfffc));
 
@@ -47,21 +42,15 @@ void loadroms(void) {
     }
 
     cpu.memory.LoadKernal(buffer);
-}
 
-void loadcputest(void) {
+    std::ifstream charsetRom("chargen", std::ios::in | std::ios::binary);
+    charsetRom.read((char*)buffer, 4096);
 
-    UINT8_T buffer[65535];
-    std::ifstream tests("6502_functional_test.bin", std::ios::in | std::ios::binary);
-    tests.read((char*)buffer, 8192);
-
-    if (!tests) {
-        std::cout << "Couldnt load test file!\n";
+    if (!charsetRom) {
+        std::cout << "Couldnt load character rom file!\n";
         exit(0);
     }
 
-    for (int x = 0; x < 65535; x++)
-        cpu.memory.LoadRAM(buffer);
-
-
+    cpu.memory.LoadCharset(buffer);
 }
+

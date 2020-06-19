@@ -27,6 +27,12 @@
     <ClCompile Include="MOS6569.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="win32\Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win32\Keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MOS6510.h">
@@ -44,6 +50,12 @@
     <ClInclude Include="MOS6569.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="win32\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win32\Keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="D:\Development\SDL2-2.0.12\lib\x86\SDL2.lib" />
@@ -55,5 +67,6 @@
     <None Include="kernal" />
     <None Include=".gitignore" />
     <None Include="SDL2.dll" />
+    <None Include="chargen" />
   </ItemGroup>
 </Project>

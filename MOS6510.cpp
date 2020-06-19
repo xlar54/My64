@@ -22,6 +22,7 @@ void MOS6510::run(UINT16_T address) {
 	bool running = true;
 	
 	pc = address;
+	startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
 	UINT8_T opcode = 0;  
 
@@ -32,7 +33,7 @@ void MOS6510::run(UINT16_T address) {
 		//if (pc == 0xfd9a)
 		//	trace = true;
 
-		pc++;
+		inc(1);
 
 		switch (opcode)
 		{
@@ -70,7 +71,7 @@ void MOS6510::run(UINT16_T address) {
 			case 0x30: { bfs(n); break; } //bmi
 			case 0xD0: { bfc(z); break; } //bne
 			case 0x10: { bfc(n); break; } //bpl
-			case 0x00: { brk(); running = false;  break; }
+			case 0x00: { brk();  break; }
 			case 0x50: { bfc(v); break; } //bvc
 			case 0x70: { bfs(v); break; } //bvs
 
@@ -221,6 +222,14 @@ void MOS6510::run(UINT16_T address) {
 			case 0x98: { tya(); break; }
 			default:
 			{ running = false; break; };
+		}
+
+		currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+
+		if ((currentTime.count() - startTime.count()) * 6 > timer50hz * 5)
+		{
+			irq();
+			//std::cout << (currentTime.count() - startTime.count()) * 6 << "   " << timer50hz*5 << "\n";
 		}
 
 		if (trace)

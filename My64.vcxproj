@@ -143,16 +143,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="win32\Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MOS6510.cpp" />
     <ClCompile Include="MOS6569.cpp" />
+    <ClCompile Include="win32\Screen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="win32\Keyboard.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MOS6510.h" />
     <ClInclude Include="MOS6569.h" />
+    <ClInclude Include="win32\Screen.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +166,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="basic" />
+    <None Include="chargen" />
     <None Include="kernal" />
     <None Include="README.md" />
     <None Include="SDL2.dll" />
