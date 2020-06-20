@@ -1,10 +1,18 @@
 #include "main.h"
 #include <iostream>
 #include <fstream>
-#include "MOS6510.h"
-#include "MOS6569.h"
 
-void loadroms(void);
+#ifdef __VIC20__
+    const char* basicrom = "./roms/vic20/basic";
+    const char* kernalrom = "./roms/vic20/kernal";
+    const char* charrom = "./roms/vic20/chargen";
+#endif
+
+#ifdef __C64__
+    const char* basicrom = "./roms/c64/basic";
+    const char* kernalrom = "./roms/c64/kernal";
+    const char* charrom = "./roms/c64/chargen";
+#endif
 
 MOS6510 cpu;
 MOS6569 vic2;
@@ -23,7 +31,7 @@ int main(int argc, char* argv[])
 void loadroms(void) {
 
     UINT8_T buffer[8192];
-    std::ifstream basicRom("basic", std::ios::in | std::ios::binary);
+    std::ifstream basicRom(basicrom, std::ios::in | std::ios::binary);
     basicRom.read((char*)buffer, 8192);
     
     if (!basicRom) {
@@ -33,7 +41,7 @@ void loadroms(void) {
 
     cpu.memory.LoadBasic(buffer);
 
-    std::ifstream kernelRom("kernal", std::ios::in | std::ios::binary);
+    std::ifstream kernelRom(kernalrom, std::ios::in | std::ios::binary);
     kernelRom.read((char*)buffer, 8192);
 
     if (!kernelRom) {
@@ -43,7 +51,7 @@ void loadroms(void) {
 
     cpu.memory.LoadKernal(buffer);
 
-    std::ifstream charsetRom("chargen", std::ios::in | std::ios::binary);
+    std::ifstream charsetRom(charrom, std::ios::in | std::ios::binary);
     charsetRom.read((char*)buffer, 4096);
 
     if (!charsetRom) {

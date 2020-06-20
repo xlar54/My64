@@ -1,6 +1,8 @@
 #pragma once
+#include "Machine.h"
 #include "types.h"
 #include "MOS6569.h"
+
 
 class Memory
 {

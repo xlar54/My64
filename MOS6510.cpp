@@ -221,7 +221,10 @@ void MOS6510::run(UINT16_T address) {
 			case 0x9A: { txs(); break; }
 			case 0x98: { tya(); break; }
 			default:
-			{ running = false; break; };
+			{ 
+				running = false;
+				std::cout << "\n\nFATAL ERROR: Unknown opcode:" << (int)opcode << " - PC=" << (int)pc << "\n\n";
+				break; };
 		}
 
 		currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());

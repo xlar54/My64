@@ -61,15 +61,12 @@ private:
 
 		if (ch != 0)
 		{
-			UINT8_T buff = memory.Peek(0xc6);
+			UINT8_T buff = memory.Peek(ZP_CHARS_IN_KBUFFER);
 
 			if (buff < 10)
 			{
-				if (ch != 0)
-				{
-					memory.Poke(0x0277 + buff, ch);
-					memory.Poke(0xC6, buff + 1);
-				};
+				memory.Poke(KB_BUFF_START + buff, ch);
+				memory.Poke(ZP_CHARS_IN_KBUFFER, buff + 1);
 			}
 		}
 

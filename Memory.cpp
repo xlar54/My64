@@ -1,7 +1,6 @@
 #include "Memory.h"
 #include <iostream>
 
-
 Memory::Memory() {
 	
 	for (int t = 0; t < 65535; t++)
@@ -25,8 +24,8 @@ void Memory::MapIO(MOS6569* vic2)
 
 UINT8_T Memory::Peek(UINT16_T address)
 {
-	if (basicIn && (address >= 0xa000 && address <= 0xbfff))
-		return basic[address - 0xa000];
+	if (basicIn && (address >= BASIC_START && address <= BASIC_END))
+		return basic[address - BASIC_START];
 		
 	if (ioIn && (address >= 0xd000 && address <= 0xdfff))
 	{
@@ -36,9 +35,9 @@ UINT8_T Memory::Peek(UINT16_T address)
 			return 0xff;
 	}	
 
-	if (kernalIn && (address >= 0xe000 && address <= 0xffff))
+	if (kernalIn && (address >= KERNAL_START && address <= KERNAL_END))
 	{
-		return kernal[address - 0xe000];
+		return kernal[address - KERNAL_START];
 	}
 
 	return ram[address];
@@ -46,14 +45,14 @@ UINT8_T Memory::Peek(UINT16_T address)
 
 UINT16_T Memory::PeekW(UINT16_T address)
 {
-	if (basicIn && (address >= 0xa000 && address <= 0xbfff))
-		return basic[address - 0xa000 + 1] * 256 + basic[address - 0xa000];
+	if (basicIn && (address >= BASIC_START && address <= BASIC_END))
+		return basic[address - BASIC_START + 1] * 256 + basic[address - BASIC_START];
 
 	if (ioIn && (address >= 0xd000 && address <= 0xdfff))
 		return 0xffff;
 
-	if (kernalIn && (address >= 0xe000 && address <= 0xffff))
-		return kernal[address - 0xe000 + 1] * 256 + kernal[address - 0xe000];
+	if (kernalIn && (address >= KERNAL_START && address <= KERNAL_END))
+		return kernal[address - KERNAL_START + 1] * 256 + kernal[address - KERNAL_START];
 
 	return ram[address + 1] * 256 + ram[address];
 }
@@ -62,15 +61,15 @@ void Memory::Poke(UINT16_T address, UINT8_T value)
 {
 	ram[address] = value;
 
-	if (address >= 0x0400 && address <= 0x07e7)
-		vic2->Text(address-0x400, value);
+	if (address >= SCREEN_START && address <= SCREEN_END)
+		vic2->Text(address-SCREEN_START, value);
 		
 }
 
 void Memory::Text(UINT16_T pos, UINT8_T value)
 {
-	int x0 = (pos % 40) * 8;
-	int y0 = (pos / 40) * 8;
+	int x0 = (pos % MAX_COLS) * 8;
+	int y0 = (pos / MAX_COLS) * 8;
 	for (int x = 0; x < 7; x++)
 		for (int y = 0; y < 7; y++)
 			if (VicPeek(0x1000 + value * 8 + y) & (0x80 >> x))

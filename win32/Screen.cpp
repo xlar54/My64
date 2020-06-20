@@ -1,6 +1,8 @@
 #include "Screen.h"
 #include <iostream>
 #include "windows.h"
+#include "..\Machine.h"
+
 
 Screen::Screen(void)
 {
@@ -81,7 +83,7 @@ void gotoxy(int x, int y)
 
 void Screen::Text(UINT16_T pos, UINT8_T value)
 {
-    gotoxy((pos % 40) + 1, (pos / 40) + 1);
+    gotoxy((pos % MAX_COLS) + 1, (pos / MAX_COLS) + 1);
 
     if (value < 0x80)
         std::cout << charset[value];

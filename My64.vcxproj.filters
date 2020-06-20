@@ -56,6 +56,9 @@
     <ClInclude Include="win32\Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Machine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="D:\Development\SDL2-2.0.12\lib\x86\SDL2.lib" />
@@ -68,5 +71,11 @@
     <None Include=".gitignore" />
     <None Include="SDL2.dll" />
     <None Include="chargen" />
+    <None Include="roms\c64\basic" />
+    <None Include="roms\c64\chargen" />
+    <None Include="roms\c64\kernal" />
+    <None Include="roms\vic20\basic" />
+    <None Include="roms\vic20\chargen" />
+    <None Include="roms\vic20\kernal" />
   </ItemGroup>
 </Project>
