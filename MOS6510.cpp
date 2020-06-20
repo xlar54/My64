@@ -30,8 +30,9 @@ void MOS6510::run(UINT16_T address) {
 	{
 		opcode = memory.Peek(pc);
 
-		//if (pc == 0xfd9a)
-		//	trace = true;
+		//trace = true;
+		//if (pc == 0x9400)
+		//	running = false;
 
 		inc(1);
 

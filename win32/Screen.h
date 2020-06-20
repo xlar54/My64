@@ -32,7 +32,8 @@ public:
 	Screen(void);
 	void Write(UINT8_T value);
 	void SetPixel(UINT16_T x, UINT8_T y, UINT8_T coloridx);
-	void Text(UINT16_T pos, UINT8_T value);
+	void Console(UINT16_T pos, UINT8_T value);
+	void Refresh(void);
 
 };
 

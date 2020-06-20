@@ -15,7 +15,7 @@
 #endif
 
 MOS6510 cpu;
-MOS6569 vic2;
+MOS6569 vic2(&cpu.memory);
 
 int main(int argc, char* argv[])
 {

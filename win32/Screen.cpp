@@ -58,6 +58,11 @@ void Screen::setColors(SDL_Color* colors)
     colors[15].r = 0xbb; colors[15].g = 0xbb; colors[15].b = 0xbb; colors[15].a = 0xff;
 }
 
+void Screen::Refresh(void)
+{
+    SDL_RenderPresent(rend);
+}
+
 void Screen::SetPixel(UINT16_T x, UINT8_T y, UINT8_T coloridx)
 {
     SDL_SetRenderDrawColor(rend, colors[coloridx].r, colors[coloridx].g, colors[coloridx].b, colors[coloridx].a);
@@ -81,7 +86,7 @@ void gotoxy(int x, int y)
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void Screen::Text(UINT16_T pos, UINT8_T value)
+void Screen::Console(UINT16_T pos, UINT8_T value)
 {
     gotoxy((pos % MAX_COLS) + 1, (pos / MAX_COLS) + 1);
 

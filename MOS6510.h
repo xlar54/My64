@@ -488,7 +488,7 @@ private:
 			pc = memory.PeekW(0xfffe);
 			
 			addkey();
-
+			memory.GetVIC()->Refresh();
 			timer50hz += 20;
 		}
 	};
