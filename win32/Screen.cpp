@@ -12,7 +12,7 @@ Screen::Screen(void)
         std::cout << "error initializing SDL: %s\n" << SDL_GetError();
     }
     else {
-        win = SDL_CreateWindow("My64", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+        win = SDL_CreateWindow("My64", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width+50, height+50, 0);
 
         // triggers the program that controls 
         // your graphics hardware and sets flags 
@@ -22,8 +22,8 @@ Screen::Screen(void)
         rend = SDL_CreateRenderer(win, -1, render_flags);
 
         SDL_RenderClear(rend);
-        SDL_Rect fillRect = { 0, 0, width, height };
-        SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xFF);
+        SDL_Rect fillRect = { 0, 0, width+50, height+50 };
+        SDL_SetRenderDrawColor(rend, 0x00, 0x88, 0xff, 0xFF);
         SDL_RenderFillRect(rend, &fillRect);
         SDL_RenderPresent(rend);
 
@@ -66,7 +66,7 @@ void Screen::Refresh(void)
 void Screen::SetPixel(UINT16_T x, UINT8_T y, UINT8_T coloridx)
 {
     SDL_SetRenderDrawColor(rend, colors[coloridx].r, colors[coloridx].g, colors[coloridx].b, colors[coloridx].a);
-    SDL_RenderDrawPoint(rend, x, y);
+    SDL_RenderDrawPoint(rend, x+25, y+25);
 }
 
 void Screen::Write(UINT8_T value)
