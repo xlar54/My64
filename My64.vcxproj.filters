@@ -71,11 +71,5 @@
     <None Include=".gitignore" />
     <None Include="SDL2.dll" />
     <None Include="chargen" />
-    <None Include="roms\c64\basic" />
-    <None Include="roms\c64\chargen" />
-    <None Include="roms\c64\kernal" />
-    <None Include="roms\vic20\basic" />
-    <None Include="roms\vic20\chargen" />
-    <None Include="roms\vic20\kernal" />
   </ItemGroup>
 </Project>

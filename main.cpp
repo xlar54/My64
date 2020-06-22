@@ -2,17 +2,9 @@
 #include <iostream>
 #include <fstream>
 
-#ifdef __VIC20__
-    const char* basicrom = "./roms/vic20/basic";
-    const char* kernalrom = "./roms/vic20/kernal";
-    const char* charrom = "./roms/vic20/chargen";
-#endif
-
-#ifdef __C64__
-    const char* basicrom = "./roms/c64/basic";
-    const char* kernalrom = "./roms/c64/kernal";
-    const char* charrom = "./roms/c64/chargen";
-#endif
+const char* basicrom = "./roms/basic";
+const char* kernalrom = "./roms/kernal";
+const char* charrom = "./roms/chargen";
 
 MOS6510 cpu;
 MOS6569 vic2(&cpu.memory);

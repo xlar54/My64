@@ -96,6 +96,7 @@ void Memory::Poke(UINT16_T address, UINT8_T value)
 
 UINT8_T Memory::Peek(UINT16_T address)
 {
+
 	if (address >= BASIC_START && address <= BASIC_END)
 	{
 		if (hiANDlo)
@@ -103,7 +104,8 @@ UINT8_T Memory::Peek(UINT16_T address)
 		else
 			return ram[address];
 	}
-		
+
+
 	if (address >= IO_START && address <= IO_END)
 	{
 		if (hiORlo)
@@ -116,6 +118,7 @@ UINT8_T Memory::Peek(UINT16_T address)
 		else
 			return ram[address];
 	}	
+
 
 	if (address >= KERNAL_START && address <= KERNAL_END)
 	{
@@ -135,19 +138,6 @@ UINT16_T Memory::PeekW(UINT16_T address)
 
 	return hi * 256 + lo;
 }
-
-void Memory::Text(UINT16_T pos, UINT8_T value)
-{
-	int x0 = (pos % MAX_COLS) * 8;
-	int y0 = (pos / MAX_COLS) * 8;
-	for (int x = 0; x < 7; x++)
-		for (int y = 0; y < 7; y++)
-			if (VicPeek(0x1000 + value * 8 + y) & (0x80 >> x))
-				vic2->SetPixel(x0 + x, y0 + y, 14); //light blue
-			else
-				vic2->SetPixel(x0 + x, y0 + y, 6); //blue
-}
-
 
 UINT8_T Memory::VicPeek(UINT16_T address)
 {

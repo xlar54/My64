@@ -170,12 +170,6 @@
     <None Include="chargen" />
     <None Include="kernal" />
     <None Include="README.md" />
-    <None Include="roms\c64\basic" />
-    <None Include="roms\c64\chargen" />
-    <None Include="roms\c64\kernal" />
-    <None Include="roms\vic20\basic" />
-    <None Include="roms\vic20\chargen" />
-    <None Include="roms\vic20\kernal" />
     <None Include="SDL2.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

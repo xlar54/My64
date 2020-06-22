@@ -39,7 +39,6 @@ public:
 	UINT8_T ioIn(UINT16_T address);
 	void ioOut(UINT16_T address, UINT8_T value);
 	
-	void Text(UINT16_T pos, UINT8_T value);
 	MOS6569* GetVIC(void);
 
 };
