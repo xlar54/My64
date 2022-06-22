@@ -1,6 +1,9 @@
 #include "MOS6510.h"
 #include <iostream>
 
+using namespace std;
+using namespace std::chrono;
+
 MOS6510::MOS6510(void) {
 	a = 0;
 	x = 0;
@@ -14,7 +17,7 @@ MOS6510::MOS6510(void) {
 
 void MOS6510::dump(UINT8_T instr) {
 
-	std::cout << std::hex << "PC:" << (int)pc << " OP:" << (int)instr << "  A:" << (int)a << " X:" << (int)x << " Y:" << (int)y << " SP:" << (int)s << " SR:" << (int)p << "\n";
+	cout << hex << "PC:" << (int)pc << " OP:" << (int)instr << "  A:" << (int)a << " X:" << (int)x << " Y:" << (int)y << " SP:" << (int)s << " SR:" << (int)p << "\n";
 }
 
 void MOS6510::run(UINT16_T address) {
@@ -22,7 +25,7 @@ void MOS6510::run(UINT16_T address) {
 	bool running = true;
 	
 	pc = address;
-	startTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+	startTime = duration_cast < milliseconds>(system_clock::now().time_since_epoch());
 
 	UINT8_T opcode = 0;  
 
@@ -224,11 +227,11 @@ void MOS6510::run(UINT16_T address) {
 			default:
 			{ 
 				running = false;
-				std::cout << "\n\nFATAL ERROR: Unknown opcode:" << (int)opcode << " - PC=" << (int)pc << "\n\n";
+				cout << "\n\nFATAL ERROR: Unknown opcode:" << (int)opcode << " - PC=" << (int)pc << "\n\n";
 				break; };
 		}
 
-		currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+		currentTime = duration_cast < milliseconds>(system_clock::now().time_since_epoch());
 
 		if ((currentTime.count() - startTime.count()) * 6 > timer50hz * 5)
 		{
