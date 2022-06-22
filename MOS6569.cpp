@@ -4,9 +4,15 @@
 
 Memory *mem;
 
-MOS6569::MOS6569(Memory *memory)
+MOS6569::MOS6569(Memory* memory) :
+	bankAddress(0),
+	charRomAddress(0),
+	screenAddress(0)
 {
 	mem = memory;
+
+	for (int x = 0; x < (COLOR_RAM_END - COLOR_RAM_START); color_ram[x++] = 0);
+	for (int x = 0; x < 0x2e; reg[x++] = 0);
 }
 
 void MOS6569::Bank(UINT8_T val)

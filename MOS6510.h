@@ -132,12 +132,12 @@ private:
 		UINT16_T h;
 		h = a + memory.Peek(address);
 		if (flagset(c)) { h++; };
-		a = h;
+		a = (UINT8_T)h;
 		setflag(c, h > 0xff);
 		setflag(z, a == 0);
 		setflag(n, a >= 0x80);
 		h = h + 0x80;
-		setflag(v, (h > 0xff) | (h < 0));
+		setflag(v, (h > 0xff) || (h < 0));
 	};
 
 	void sbc(UINT16_T address)
@@ -145,12 +145,12 @@ private:
 		UINT16_T h;
 		h = a - memory.Peek(address);
 		if (!flagset(c)) { h--; };
-		a = h;
+		a = (UINT8_T)h;
 		setflag(c, h <= 0xff);
 		setflag(z, a == 0);
 		setflag(n, a >= 0x80);
 		h = h + 0x80;
-		setflag(v, (h > 0xff) | (h < 0));
+		setflag(v, (h > 0xff) || (h < 0));
 	};
 
 	void and_ (UINT16_T address)
@@ -308,7 +308,7 @@ private:
 	{
 		UINT16_T h;
 		h = memory.Peek(address) - 1;
-		memory.Poke(address, h);
+		memory.Poke(address, (UINT8_T)h);
 		setflag(z, lo(h) == 0);
 		setflag(n, lo(h) >= 0x80);
 	};
@@ -317,7 +317,7 @@ private:
 	{
 		UINT16_T h;
 		h = x - 1;
-		x = h;
+		x = (UINT8_T)h;
 		setflag(z, x == 0);
 		setflag(n, x >= 0x80);
 	};
@@ -326,7 +326,7 @@ private:
 	{
 		UINT16_T h;
 		h = y - 1;
-		y = h;
+		y = (UINT8_T)h;
 		setflag(z, lo(h) == 0);
 		setflag(n, lo(h) >= 0x80);
 	};
@@ -340,7 +340,7 @@ private:
 
 	void inc_(UINT16_T address)
 	{
-		UINT16_T h;
+		UINT8_T h;
 		h = memory.Peek(address) + 1;
 		memory.Poke(address, h);
 		setflag(z, lo(h) == 0);
@@ -351,7 +351,7 @@ private:
 	{
 		UINT16_T h;
 		h = x + 1;
-		x = h;
+		x = (UINT8_T)h;
 		setflag(z, x == 0);
 		setflag(n, x >= 0x80);
 	};
@@ -360,7 +360,7 @@ private:
 	{
 		UINT16_T h;
 		h = y + 1;
-		y = h;
+		y = (UINT8_T)h;
 		setflag(z, y == 0);
 		setflag(n, y >= 0x80);
 	};
