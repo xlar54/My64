@@ -1,11 +1,14 @@
 // Tell SDL not to mess with main()
 #define SDL_MAIN_HANDLED
 
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include "Machine.h"
 #include "MOS6510.h"
 #include "MOS6569.h"
+
+using namespace std;
 
 const char* basicrom = "./roms/basic";
 const char* kernalrom = "./roms/kernal";
@@ -30,31 +33,31 @@ int main(int argc, char* argv[])
 void loadroms(void) {
 
     UINT8_T buffer[8192];
-    std::ifstream basicRom(basicrom, std::ios::in | std::ios::binary);
+    ifstream basicRom(basicrom, ios::in | ios::binary);
     basicRom.read((char*)buffer, 8192);
     
     if (!basicRom) {
-        std::cout << "Couldnt load basic rom file!\n";
+        cout << "Couldnt load basic rom file!\n";
         exit(0);
     }
 
     cpu.memory.LoadBasic(buffer);
 
-    std::ifstream kernelRom(kernalrom, std::ios::in | std::ios::binary);
+    ifstream kernelRom(kernalrom, ios::in | ios::binary);
     kernelRom.read((char*)buffer, 8192);
 
     if (!kernelRom) {
-        std::cout << "Couldnt load kernal rom file!\n";
+        cout << "Couldnt load kernal rom file!\n";
         exit(0);
     }
 
     cpu.memory.LoadKernal(buffer);
 
-    std::ifstream charsetRom(charrom, std::ios::in | std::ios::binary);
+    ifstream charsetRom(charrom, ios::in | ios::binary);
     charsetRom.read((char*)buffer, 4096);
 
     if (!charsetRom) {
-        std::cout << "Couldnt load character rom file!\n";
+        cout << "Couldnt load character rom file!\n";
         exit(0);
     }
 

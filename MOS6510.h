@@ -6,6 +6,8 @@
 #include <iostream>
 #include "win32\Keyboard.h"
 
+using namespace std::chrono;
+
 class MOS6510
 {
 private:
@@ -19,8 +21,8 @@ private:
 	UINT8_T s = 0xff;
 	UINT16_T pc = 0;
 
-	std::chrono::milliseconds startTime;
-	std::chrono::milliseconds currentTime;
+	milliseconds startTime;
+	milliseconds currentTime;
 	Keyboard keyboard;
 
 	long long  timer50hz = 20;
