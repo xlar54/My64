@@ -61,15 +61,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="D:\Development\SDL2-2.0.12\lib\x86\SDL2.lib" />
-    <Library Include="D:\Development\SDL2-2.0.12\lib\x86\SDL2main.lib" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="README.md" />
     <None Include="basic" />
     <None Include="kernal" />
     <None Include=".gitignore" />
-    <None Include="SDL2.dll" />
     <None Include="chargen" />
+    <None Include="SDL2.dll" />
   </ItemGroup>
 </Project>

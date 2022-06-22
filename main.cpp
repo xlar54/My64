@@ -1,6 +1,10 @@
-#include "main.h"
 #include <iostream>
 #include <fstream>
+#include "Machine.h"
+#include "MOS6510.h"
+#include "MOS6569.h"
+
+#undef main
 
 const char* basicrom = "./roms/basic";
 const char* kernalrom = "./roms/kernal";
@@ -8,6 +12,8 @@ const char* charrom = "./roms/chargen";
 
 MOS6510 cpu;
 MOS6569 vic2(&cpu.memory);
+
+void loadroms(void); 
 
 int main(int argc, char* argv[])
 {
