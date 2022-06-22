@@ -1,10 +1,11 @@
+// Tell SDL not to mess with main()
+#define SDL_MAIN_HANDLED
+
 #include <iostream>
 #include <fstream>
 #include "Machine.h"
 #include "MOS6510.h"
 #include "MOS6569.h"
-
-#undef main
 
 const char* basicrom = "./roms/basic";
 const char* kernalrom = "./roms/kernal";
